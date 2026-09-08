@@ -68,7 +68,6 @@
     </div>
 
     <script>
-        // Itakda ang kasalukuyang petsa bilang default sa date picker
         document.getElementById('date').valueAsDate = new Date();
 
         function setPerson(name) {
@@ -92,13 +91,14 @@
             const submitBtn = document.getElementById('submitBtn');
             const statusMessage = document.getElementById('statusMessage');
 
-            const payload = {
+            // Gamitin ang URLSearchParams para maipasa nang diretso sa Apps Script
+            const formData = new URLSearchParams({
                 person: document.getElementById('person').value,
-                date: document.getElementById('date').value, // Formats as YYYY-MM-DD
+                date: document.getElementById('date').value,
                 item: document.getElementById('item').value,
                 category: document.getElementById('category').value,
                 amount: document.getElementById('amount').value
-            };
+            });
 
             submitBtn.disabled = true;
             submitBtn.textContent = "Processing...";
@@ -108,8 +108,7 @@
                 await fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    body: formData
                 });
 
                 statusMessage.textContent = "Record successfully synchronized.";
