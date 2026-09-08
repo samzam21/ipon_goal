@@ -20,10 +20,10 @@
             <div>
                 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Accountable Party</label>
                 <div class="grid grid-cols-2 gap-3">
-                    <button type="button" onclick="setPerson('Sam')" id="btnSam" class="py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none">Sam</button>
-                    <button type="button" onclick="setPerson('Jet')" id="btnJet" class="py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none">Jet</button>
+                    <button type="button" onclick="setPerson('User 1')" id="btnUser1" class="py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none">User 1</button>
+                    <button type="button" onclick="setPerson('User 2')" id="btnUser2" class="py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none">User 2</button>
                 </div>
-                <input type="hidden" id="person" value="Sam">
+                <input type="hidden" id="person" value="User 1">
             </div>
 
             <!-- Transaction Type (Expense vs Income) -->
@@ -83,15 +83,15 @@
 
         function setPerson(name) {
             document.getElementById('person').value = name;
-            const btnSam = document.getElementById('btnSam');
-            const btnJet = document.getElementById('btnJet');
+            const btnUser1 = document.getElementById('btnUser1');
+            const btnUser2 = document.getElementById('btnUser2');
             
-            if(name === 'Sam') {
-                btnSam.className = "py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none";
-                btnJet.className = "py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none";
+            if(name === 'User 1') {
+                btnUser1.className = "py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none";
+                btnUser2.className = "py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none";
             } else {
-                btnJet.className = "py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none";
-                btnSam.className = "py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none";
+                btnUser2.className = "py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none";
+                btnUser1.className = "py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none";
             }
         }
 
@@ -142,7 +142,7 @@
                 
                 document.getElementById('expenseForm').reset();
                 document.getElementById('date').valueAsDate = new Date();
-                setPerson('Sam');
+                setPerson('User 1');
                 setType('expense');
             } catch (error) {
                 statusMessage.textContent = "Transmission failed. Please verify network status.";
