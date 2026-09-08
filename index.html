@@ -4,15 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Financial Tracking Portal</title>
-    
-    <!-- Anti-Cache Meta Tags para mag-update agad ang app nang hindi dine-delete -->
+    <!-- Anti-Cache Meta Tags -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-
-    <!-- Custom iOS App Icon (Maglagay ng icon.png sa root folder ng GitHub repo mo, sukat: 512x512 o 180x180 pixels) -->
-    <link rel="apple-touch-icon" href="Financial Goal Tracker.png">
-
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -84,6 +79,12 @@
                 <input type="number" step="0.01" id="amount" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition" placeholder="0.00">
             </div>
 
+            <!-- Receipt Photo Capture (Optional) -->
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Attach Receipt / Photo (Optional)</label>
+                <input type="file" id="receiptImage" accept="image/*" capture="environment" class="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition">
+            </div>
+
             <div class="pt-2">
                 <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl text-sm transition shadow-md shadow-blue-500/20 focus:outline-none">
                     Submit Entry
@@ -104,10 +105,9 @@
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center pb-6 border-b border-slate-100 mb-6 gap-4 pr-10">
                 <div>
                     <h2 class="text-xl font-bold tracking-tight text-slate-900">Financial Overview Dashboard</h2>
-                    <p class="text-sm text-slate-500 mt-1">Detailed monthly and cumulative records.</p>
+                    <p class="text-sm text-slate-500 mt-1">Detailed monthly records and receipt logs.</p>
                 </div>
                 <div>
-                    <!-- Dynamic Month/Year Picker (<input type="month">) -->
                     <input type="month" id="summaryMonthPicker" onchange="fetchSummary()" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 text-sm focus:outline-none focus:border-blue-600 transition">
                 </div>
             </div>
@@ -134,7 +134,7 @@
                         </div>
                     </div>
                     <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Transaction History (This Month)</h4>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Transaction History & Receipts</h4>
                         <div id="combinedTransactionsList" class="space-y-2 max-h-48 overflow-y-auto text-xs bg-white p-3 rounded-lg border border-slate-200">
                             <p class="text-slate-400 italic">No transactions recorded for this period.</p>
                         </div>
@@ -156,7 +156,7 @@
                         </div>
                     </div>
                     <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Sam's Transaction Logs</h4>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Sam's Transaction Logs & Receipts</h4>
                         <div id="samTransactionsList" class="space-y-2 max-h-48 overflow-y-auto text-xs bg-white p-3 rounded-lg border border-blue-100">
                             <p class="text-slate-400 italic">No transactions recorded for this period.</p>
                         </div>
@@ -178,7 +178,7 @@
                         </div>
                     </div>
                     <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Jet's Transaction Logs</h4>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">Jet's Transaction Logs & Receipts</h4>
                         <div id="jetTransactionsList" class="space-y-2 max-h-48 overflow-y-auto text-xs bg-white p-3 rounded-lg border border-amber-100">
                             <p class="text-slate-400 italic">No transactions recorded for this period.</p>
                         </div>
@@ -193,7 +193,6 @@
 
         document.getElementById('date').valueAsDate = new Date();
 
-        // Itakda ang default value ng Month Picker sa kasalukuyang taon at buwan (e.g., "2026-09")
         const now = new Date();
         const yearStr = now.getFullYear();
         const monthStr = String(now.getMonth() + 1).padStart(2, '0');
@@ -226,7 +225,7 @@
             if (val) {
                 const [y, m] = val.split('-');
                 const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-                queryMonthName = monthNames[parseInt(m, 10) - 1];
+                queryMonthName = monthNames[parseInt(m, 10) - 1] + " " + y;
             }
 
             try {
@@ -258,7 +257,6 @@
                 document.getElementById('combCumExp').textContent = php(combCumExp);
                 document.getElementById('combCumInc').textContent = php(combCumInc);
 
-                // Render Transaction Logs
                 renderTransactions(data.currentMonth.transactions);
 
             } catch (err) {
@@ -288,12 +286,22 @@
             }
 
             transactions.forEach(tx => {
-                const itemLine = `<div class="p-2 rounded bg-slate-50 border border-slate-100 flex justify-between items-center"><span class="font-medium text-slate-700">${tx.note}</span></div>`;
+                // I-parse kung may resibo link sa note
+                let displayNote = tx.note;
+                let linkHtml = '';
+                if (tx.note.includes('Receipt: ')) {
+                    const parts = tx.note.split(' | Receipt: ');
+                    displayNote = parts[0];
+                    const receiptUrl = parts[1];
+                    linkHtml = `<a href="${receiptUrl}" target="_blank" class="text-blue-600 underline font-medium ml-2">View Receipt</a>`;
+                }
+
+                const itemLine = `<div class="p-2.5 rounded bg-slate-50 border border-slate-100 flex justify-between items-center"><span class="text-slate-700">${displayNote}</span> ${linkHtml}</div>`;
                 combHtml += itemLine;
                 if (tx.person === 'Sam') {
-                    samHtml += `<div class="p-2 rounded bg-blue-50/30 border border-blue-50 flex justify-between items-center"><span class="font-medium text-slate-700">${tx.note}</span></div>`;
+                    samHtml += `<div class="p-2.5 rounded bg-blue-50/30 border border-blue-50 flex justify-between items-center"><span class="text-slate-700">${displayNote}</span> ${linkHtml}</div>`;
                 } else {
-                    jetHtml += `<div class="p-2 rounded bg-amber-50/30 border border-amber-50 flex justify-between items-center"><span class="font-medium text-slate-700">${tx.note}</span></div>`;
+                    jetHtml += `<div class="p-2.5 rounded bg-amber-50/30 border border-amber-50 flex justify-between items-center"><span class="text-slate-700">${displayNote}</span> ${linkHtml}</div>`;
                 }
             });
 
@@ -363,43 +371,63 @@
             const submitBtn = document.getElementById('submitBtn');
             const statusMessage = document.getElementById('statusMessage');
 
-            const formData = new URLSearchParams({
-                person: document.getElementById('person').value,
-                type: document.getElementById('entryType').value,
-                date: document.getElementById('date').value,
-                item: document.getElementById('item').value,
-                category: document.getElementById('entryType').value === 'expense' ? document.getElementById('category').value : 'Income',
-                amount: document.getElementById('amount').value
-            });
-
-            submitBtn.disabled = true;
-            submitBtn.textContent = "Processing & Syncing...";
-            statusMessage.classList.add('hidden');
-
-            try {
-                await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    body: formData
+            const fileInput = document.getElementById('receiptImage');
+            
+            const sendData = async (base64Image = null, imageType = null) => {
+                const formData = new URLSearchParams({
+                    person: document.getElementById('person').value,
+                    type: document.getElementById('entryType').value,
+                    date: document.getElementById('date').value,
+                    item: document.getElementById('item').value,
+                    category: document.getElementById('entryType').value === 'expense' ? document.getElementById('category').value : 'Income',
+                    amount: document.getElementById('amount').value
                 });
 
-                statusMessage.textContent = "Record successfully synchronized.";
-                statusMessage.className = "mt-4 text-center text-sm font-medium text-blue-600";
-                statusMessage.classList.remove('hidden');
-                
-                document.getElementById('expenseForm').reset();
-                document.getElementById('date').valueAsDate = new Date();
-                document.getElementById('person').selectedIndex = 0;
-                document.getElementById('overviewBtnContainer').classList.add('hidden');
-                setType('expense');
+                if (base64Image) {
+                    formData.append('imageBase64', base64Image);
+                    formData.append('imageType', imageType);
+                }
 
-            } catch (error) {
-                statusMessage.textContent = "Transmission failed. Please verify network status.";
-                statusMessage.className = "mt-4 text-center text-sm font-medium text-rose-600";
-                statusMessage.classList.remove('hidden');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = "Submit Entry";
+                try {
+                    await fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: formData
+                    });
+
+                    statusMessage.textContent = "Record successfully synchronized with receipt.";
+                    statusMessage.className = "mt-4 text-center text-sm font-medium text-blue-600";
+                    statusMessage.classList.remove('hidden');
+                    
+                    document.getElementById('expenseForm').reset();
+                    document.getElementById('date').valueAsDate = new Date();
+                    document.getElementById('person').selectedIndex = 0;
+                    document.getElementById('overviewBtnContainer').classList.add('hidden');
+                    setType('expense');
+
+                } catch (error) {
+                    statusMessage.textContent = "Transmission failed. Please verify network status.";
+                    statusMessage.className = "mt-4 text-center text-sm font-medium text-rose-600";
+                    statusMessage.classList.remove('hidden');
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Submit Entry";
+                }
+            };
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = "Uploading & Syncing...";
+            statusMessage.classList.add('hidden');
+
+            if (fileInput.files && fileInput.files[0]) {
+                const file = fileInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function(uploadEvent) {
+                    sendData(uploadEvent.target.result, file.type);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                sendData();
             }
         });
     </script>
