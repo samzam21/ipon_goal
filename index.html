@@ -9,79 +9,25 @@
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col items-center justify-start p-4 md:p-8 font-sans antialiased">
 
-    <div class="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-slate-200 mb-8">
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center pb-6 border-b border-slate-100 mb-6 gap-4">
-            <div>
-                <h1 class="text-xl font-bold tracking-tight text-slate-900">Financial Overview Dashboard</h1>
-                <p class="text-sm text-slate-500 mt-1">Real-time summary of monthly and cumulative records.</p>
-            </div>
-            <div>
-                <select id="summaryMonth" onchange="fetchSummary()" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 text-sm focus:outline-none focus:border-blue-600 transition">
-                    <option value="September">September</option>
-                    <option value="October">October</option>
-                    <option value="November">November</option>
-                    <option value="December">December</option>
-                </select>
-            </div>
-        </div>
-
-        <!-- Summary Cards Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <!-- User 1 Summary -->
-            <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4">
-                <h2 class="text-xs font-bold uppercase tracking-wider text-blue-800 mb-3">User 1 Summary</h2>
-                <div class="space-y-2 text-sm">
-                    <div class="flex justify-between"><span class="text-slate-600">Month Exp:</span> <span id="u1MonthExp" class="font-semibold text-rose-600">₱0.00</span></div>
-                    <div class="flex justify-between"><span class="text-slate-600">Month Inc:</span> <span id="u1MonthInc" class="font-semibold text-emerald-600">₱0.00</span></div>
-                    <hr class="border-blue-200 my-1">
-                    <div class="flex justify-between"><span class="text-slate-600">Total Exp (Cum):</span> <span id="u1CumExp" class="font-medium text-slate-800">₱0.00</span></div>
-                    <div class="flex justify-between"><span class="text-slate-600">Total Inc (Cum):</span> <span id="u1CumInc" class="font-medium text-slate-800">₱0.00</span></div>
-                </div>
-            </div>
-
-            <!-- User 2 Summary -->
-            <div class="bg-amber-50/50 border border-amber-100 rounded-xl p-4">
-                <h2 class="text-xs font-bold uppercase tracking-wider text-amber-800 mb-3">User 2 Summary</h2>
-                <div class="space-y-2 text-sm">
-                    <div class="flex justify-between"><span class="text-slate-600">Month Exp:</span> <span id="u2MonthExp" class="font-semibold text-rose-600">₱0.00</span></div>
-                    <div class="flex justify-between"><span class="text-slate-600">Month Inc:</span> <span id="u2MonthInc" class="font-semibold text-emerald-600">₱0.00</span></div>
-                    <hr class="border-amber-200 my-1">
-                    <div class="flex justify-between"><span class="text-slate-600">Total Exp (Cum):</span> <span id="u2CumExp" class="font-medium text-slate-800">₱0.00</span></div>
-                    <div class="flex justify-between"><span class="text-slate-600">Total Inc (Cum):</span> <span id="u2CumInc" class="font-medium text-slate-800">₱0.00</span></div>
-                </div>
-            </div>
-
-            <!-- Combined Summary -->
-            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
-                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">Combined Total</h2>
-                <div class="space-y-2 text-sm">
-                    <div class="flex justify-between"><span class="text-slate-600">Month Exp:</span> <span id="combMonthExp" class="font-semibold text-rose-600">₱0.00</span></div>
-                    <div class="flex justify-between"><span class="text-slate-600">Month Inc:</span> <span id="combMonthInc" class="font-semibold text-emerald-600">₱0.00</span></div>
-                    <hr class="border-slate-200 my-1">
-                    <div class="flex justify-between"><span class="text-slate-600">Total Exp (Cum):</span> <span id="combCumExp" class="font-medium text-slate-800">₱0.00</span></div>
-                    <div class="flex justify-between"><span class="text-slate-600">Total Inc (Cum):</span> <span id="combCumInc" class="font-medium text-slate-800">₱0.00</span></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Entry Portal Form -->
-    <div class="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-slate-200">
+    <div class="w-full max-w-lg bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-slate-200 mb-8">
         <div class="mb-6 border-b border-slate-100 pb-4">
-            <h2 class="text-lg font-bold tracking-tight text-slate-900">Expense Entry Portal</h2>
+            <h1 class="text-xl font-bold tracking-tight text-slate-900">Financial Entry Portal</h1>
             <p class="text-sm text-slate-500 mt-1">Record and synchronize daily cash flow and expenditures.</p>
         </div>
 
         <form id="expenseForm" class="space-y-5">
+            <!-- Accountable Party Dropdown -->
             <div>
                 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Accountable Party</label>
-                <div class="grid grid-cols-2 gap-3">
-                    <button type="button" onclick="setPerson('User 1')" id="btnUser1" class="py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none">User 1</button>
-                    <button type="button" onclick="setPerson('User 2')" id="btnUser2" class="py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none">User 2</button>
-                </div>
-                <input type="hidden" id="person" value="User 1">
+                <select id="person" required onchange="handleUserSelection()" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition">
+                    <option value="" disabled selected>Select User Account...</option>
+                    <option value="Sam">Sam</option>
+                    <option value="Jet">Jet</option>
+                </select>
             </div>
 
+            <!-- Transaction Type (Expense vs Income) -->
             <div>
                 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Transaction Type</label>
                 <div class="grid grid-cols-2 gap-3">
@@ -91,16 +37,19 @@
                 <input type="hidden" id="entryType" value="expense">
             </div>
 
+            <!-- Transaction Date Picker -->
             <div>
                 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Transaction Date</label>
                 <input type="date" id="date" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition">
             </div>
 
+            <!-- Item Description -->
             <div>
                 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Description / Source</label>
                 <input type="text" id="item" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition" placeholder="e.g., Grocery Supplies / Salary">
             </div>
 
+            <!-- Category -->
             <div>
                 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Category</label>
                 <select id="category" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition">
@@ -113,6 +62,7 @@
                 </select>
             </div>
 
+            <!-- Amount -->
             <div>
                 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Amount (PHP)</label>
                 <input type="number" step="0.01" id="amount" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition" placeholder="0.00">
@@ -128,12 +78,68 @@
         <div id="statusMessage" class="mt-4 text-center text-sm font-medium hidden"></div>
     </div>
 
+    <!-- Financial Overview Dashboard (Hidden by default until a user is selected) -->
+    <div id="dashboardContainer" class="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-slate-200 mb-8 hidden">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center pb-6 border-b border-slate-100 mb-6 gap-4">
+            <div>
+                <h2 class="text-xl font-bold tracking-tight text-slate-900">Financial Overview Dashboard</h2>
+                <p class="text-sm text-slate-500 mt-1">Real-time summary of monthly and cumulative records.</p>
+            </div>
+            <div>
+                <select id="summaryMonth" onchange="fetchSummary()" class="bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-slate-900 text-sm focus:outline-none focus:border-blue-600 transition">
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Summary Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Sam Summary -->
+            <div class="bg-blue-50/50 border border-blue-100 rounded-xl p-4">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-blue-800 mb-3">Sam Summary</h3>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between"><span class="text-slate-600">Month Exp:</span> <span id="samMonthExp" class="font-semibold text-rose-600">₱0.00</span></div>
+                    <div class="flex justify-between"><span class="text-slate-600">Month Inc:</span> <span id="samMonthInc" class="font-semibold text-emerald-600">₱0.00</span></div>
+                    <hr class="border-blue-200 my-1">
+                    <div class="flex justify-between"><span class="text-slate-600">Total Exp (Cum):</span> <span id="samCumExp" class="font-medium text-slate-800">₱0.00</span></div>
+                    <div class="flex justify-between"><span class="text-slate-600">Total Inc (Cum):</span> <span id="samCumInc" class="font-medium text-slate-800">₱0.00</span></div>
+                </div>
+            </div>
+
+            <!-- Jet Summary -->
+            <div class="bg-amber-50/50 border border-amber-100 rounded-xl p-4">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-amber-800 mb-3">Jet Summary</h3>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between"><span class="text-slate-600">Month Exp:</span> <span id="jetMonthExp" class="font-semibold text-rose-600">₱0.00</span></div>
+                    <div class="flex justify-between"><span class="text-slate-600">Month Inc:</span> <span id="jetMonthInc" class="font-semibold text-emerald-600">₱0.00</span></div>
+                    <hr class="border-amber-200 my-1">
+                    <div class="flex justify-between"><span class="text-slate-600">Total Exp (Cum):</span> <span id="jetCumExp" class="font-medium text-slate-800">₱0.00</span></div>
+                    <div class="flex justify-between"><span class="text-slate-600">Total Inc (Cum):</span> <span id="jetCumInc" class="font-medium text-slate-800">₱0.00</span></div>
+                </div>
+            </div>
+
+            <!-- Combined Summary -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 mb-3">Combined Total</h3>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between"><span class="text-slate-600">Month Exp:</span> <span id="combMonthExp" class="font-semibold text-rose-600">₱0.00</span></div>
+                    <div class="flex justify-between"><span class="text-slate-600">Month Inc:</span> <span id="combMonthInc" class="font-semibold text-emerald-600">₱0.00</span></div>
+                    <hr class="border-slate-200 my-1">
+                    <div class="flex justify-between"><span class="text-slate-600">Total Exp (Cum):</span> <span id="combCumExp" class="font-medium text-slate-800">₱0.00</span></div>
+                    <div class="flex justify-between"><span class="text-slate-600">Total Inc (Cum):</span> <span id="combCumInc" class="font-medium text-slate-800">₱0.00</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwVjORyOjZ-407NWkoKXKur8f8cGG5qGaSyxR7D2HMF9_CZzR6APnP94bmfthVsEZZd/exec";
 
         document.getElementById('date').valueAsDate = new Date();
 
-        // I-set default dropdown sa kasalukuyang buwan
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         const currentMonthName = monthNames[new Date().getMonth()];
         const monthSelect = document.getElementById('summaryMonth');
@@ -144,8 +150,16 @@
             }
         }
 
-        // Kunin ang summary tuwing magbubukas ang page
-        window.addEventListener('load', fetchSummary);
+        function handleUserSelection() {
+            const personVal = document.getElementById('person').value;
+            const dashboard = document.getElementById('dashboardContainer');
+            if (personVal) {
+                dashboard.classList.remove('hidden');
+                fetchSummary();
+            } else {
+                dashboard.classList.add('hidden');
+            }
+        }
 
         async function fetchSummary() {
             const selectedMonth = monthSelect.value;
@@ -153,26 +167,25 @@
                 const response = await fetch(`${SCRIPT_URL}?action=getSummary&month=${selectedMonth}`);
                 const data = await response.json();
 
-                // Format currency helper
                 const php = (val) => '₱' + Number(val).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
-                // User 1
-                document.getElementById('u1MonthExp').textContent = php(data.currentMonth.user1Expense);
-                document.getElementById('u1MonthInc').textContent = php(data.currentMonth.user1Income);
-                document.getElementById('u1CumExp').textContent = php(data.cumulative.user1Expense);
-                document.getElementById('u1CumInc').textContent = php(data.cumulative.user1Income);
+                // Sam
+                document.getElementById('samMonthExp').textContent = php(data.currentMonth.samExpense);
+                document.getElementById('samMonthInc').textContent = php(data.currentMonth.samIncome);
+                document.getElementById('samCumExp').textContent = php(data.cumulative.samExpense);
+                document.getElementById('samCumInc').textContent = php(data.cumulative.samIncome);
 
-                // User 2
-                document.getElementById('u2MonthExp').textContent = php(data.currentMonth.user2Expense);
-                document.getElementById('u2MonthInc').textContent = php(data.currentMonth.user2Income);
-                document.getElementById('u2CumExp').textContent = php(data.cumulative.user2Expense);
-                document.getElementById('u2CumInc').textContent = php(data.cumulative.user2Income);
+                // Jet
+                document.getElementById('jetMonthExp').textContent = php(data.currentMonth.jetExpense);
+                document.getElementById('jetMonthInc').textContent = php(data.currentMonth.jetIncome);
+                document.getElementById('jetCumExp').textContent = php(data.cumulative.jetExpense);
+                document.getElementById('jetCumInc').textContent = php(data.cumulative.jetIncome);
 
                 // Combined
-                const combMonthExp = data.currentMonth.user1Expense + data.currentMonth.user2Expense;
-                const combMonthInc = data.currentMonth.user1Income + data.currentMonth.user2Income;
-                const combCumExp = data.cumulative.user1Expense + data.cumulative.user2Expense;
-                const combCumInc = data.cumulative.user1Income + data.cumulative.user2Income;
+                const combMonthExp = data.currentMonth.samExpense + data.currentMonth.jetExpense;
+                const combMonthInc = data.currentMonth.samIncome + data.currentMonth.jetIncome;
+                const combCumExp = data.cumulative.samExpense + data.cumulative.jetExpense;
+                const combCumInc = data.cumulative.samIncome + data.cumulative.jetIncome;
 
                 document.getElementById('combMonthExp').textContent = php(combMonthExp);
                 document.getElementById('combMonthInc').textContent = php(combMonthInc);
@@ -181,20 +194,6 @@
 
             } catch (err) {
                 console.error("Failed to fetch summary data", err);
-            }
-        }
-
-        function setPerson(name) {
-            document.getElementById('person').value = name;
-            const btn1 = document.getElementById('btnUser1');
-            const btn2 = document.getElementById('btnUser2');
-            
-            if(name === 'User 1') {
-                btn1.className = "py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none";
-                btn2.className = "py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none";
-            } else {
-                btn2.className = "py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none";
-                btn1.className = "py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none";
             }
         }
 
@@ -243,10 +242,10 @@
                 
                 document.getElementById('expenseForm').reset();
                 document.getElementById('date').valueAsDate = new Date();
-                setPerson('User 1');
+                document.getElementById('person').selectedIndex = 0;
+                document.getElementById('dashboardContainer').classList.add('hidden');
                 setType('expense');
 
-                // I-refresh agad ang summary pagkatapos mag-submit (may kaunting allowance para mabasa ng sheet)
                 setTimeout(fetchSummary, 1500);
 
             } catch (error) {
