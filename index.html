@@ -7,41 +7,41 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col items-center justify-center p-6 font-sans antialiased">
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col items-center justify-center p-6 font-sans antialiased">
 
-    <div class="w-full max-w-lg bg-zinc-900 rounded-xl shadow-2xl p-8 border border-zinc-800">
-        <div class="mb-8 border-b border-zinc-800 pb-5">
-            <h1 class="text-xl font-semibold tracking-tight text-white">Expense Entry Portal</h1>
-            <p class="text-sm text-zinc-400 mt-1">Record and synchronize daily itemized expenditures to the tracking ledger.</p>
+    <div class="w-full max-w-lg bg-white rounded-2xl shadow-lg p-8 border border-slate-200">
+        <div class="mb-8 border-b border-slate-100 pb-5">
+            <h1 class="text-xl font-bold tracking-tight text-slate-900">Expense Entry Portal</h1>
+            <p class="text-sm text-slate-500 mt-1">Record and synchronize daily itemized expenditures to the tracking ledger.</p>
         </div>
 
         <form id="expenseForm" class="space-y-5">
             <!-- Who paid -->
             <div>
-                <label class="block text-xs font-medium uppercase tracking-wider text-zinc-400 mb-2">Accountable Party</label>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Accountable Party</label>
                 <div class="grid grid-cols-2 gap-3">
-                    <button type="button" onclick="setPerson('Ako')" id="btnAko" class="py-2.5 px-4 rounded-lg border border-indigo-500 bg-indigo-500/10 text-indigo-400 text-sm font-medium transition focus:outline-none">Me</button>
-                    <button type="button" onclick="setPerson('Jet')" id="btnJet" class="py-2.5 px-4 rounded-lg border border-zinc-700 bg-zinc-800 text-zinc-300 text-sm font-medium transition focus:outline-none">Jet</button>
+                    <button type="button" onclick="setPerson('Ako')" id="btnAko" class="py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none">Me</button>
+                    <button type="button" onclick="setPerson('Jet')" id="btnJet" class="py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none">Jet</button>
                 </div>
                 <input type="hidden" id="person" value="Ako">
             </div>
 
             <!-- Date (Day of the month) -->
             <div>
-                <label class="block text-xs font-medium uppercase tracking-wider text-zinc-400 mb-2">Transaction Date (September)</label>
-                <input type="number" id="date" min="1" max="31" required class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-4 py-2.5 text-zinc-100 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition" placeholder="Enter day (1-31)">
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Transaction Date (September)</label>
+                <input type="number" id="date" min="1" max="31" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition" placeholder="Enter day (1-31)">
             </div>
 
             <!-- Item Name -->
             <div>
-                <label class="block text-xs font-medium uppercase tracking-wider text-zinc-400 mb-2">Item Description</label>
-                <input type="text" id="item" required class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-4 py-2.5 text-zinc-100 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition" placeholder="e.g., Grocery Store Supplies">
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Item Description</label>
+                <input type="text" id="item" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition" placeholder="e.g., Grocery Store Supplies">
             </div>
 
             <!-- Category -->
             <div>
-                <label class="block text-xs font-medium uppercase tracking-wider text-zinc-400 mb-2">Expense Category</label>
-                <select id="category" class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-4 py-2.5 text-zinc-100 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition">
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Expense Category</label>
+                <select id="category" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition">
                     <option value="Food & Groceries">Food & Groceries</option>
                     <option value="Bills & Utilities">Bills & Utilities</option>
                     <option value="Transport">Transport</option>
@@ -52,13 +52,13 @@
 
             <!-- Amount -->
             <div>
-                <label class="block text-xs font-medium uppercase tracking-wider text-zinc-400 mb-2">Amount (PHP)</label>
-                <input type="number" step="0.01" id="amount" required class="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-4 py-2.5 text-zinc-100 text-sm focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition" placeholder="0.00">
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Amount (PHP)</label>
+                <input type="number" step="0.01" id="amount" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition" placeholder="0.00">
             </div>
 
             <!-- Submit Button -->
             <div class="pt-2">
-                <button type="submit" id="submitBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-3 px-4 rounded-lg text-sm transition shadow-sm focus:outline-none">
+                <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-xl text-sm transition shadow-md shadow-blue-500/20 focus:outline-none">
                     Submit Entry
                 </button>
             </div>
@@ -74,15 +74,15 @@
             const btnJet = document.getElementById('btnJet');
             
             if(name === 'Ako') {
-                btnAko.className = "py-2.5 px-4 rounded-lg border border-indigo-500 bg-indigo-500/10 text-indigo-400 text-sm font-medium transition focus:outline-none";
-                btnJet.className = "py-2.5 px-4 rounded-lg border border-zinc-700 bg-zinc-800 text-zinc-300 text-sm font-medium transition focus:outline-none";
+                btnAko.className = "py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none";
+                btnJet.className = "py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none";
             } else {
-                btnJet.className = "py-2.5 px-4 rounded-lg border border-indigo-500 bg-indigo-500/10 text-indigo-400 text-sm font-medium transition focus:outline-none";
-                btnAko.className = "py-2.5 px-4 rounded-lg border border-zinc-700 bg-zinc-800 text-zinc-300 text-sm font-medium transition focus:outline-none";
+                btnJet.className = "py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none";
+                btnAko.className = "py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none";
             }
         }
 
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwVjORyOjZ-407NWkoKXKur8f8cGG5qGaSyxR7D2HMF9_CZzR6APnP94bmfthVsEZZd/exec";
+        const SCRIPT_URL = "LAGAY_MO_DITO_ANG_GOOGLE_APPS_SCRIPT_WEB_APP_URL_MO";
 
         document.getElementById('expenseForm').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -110,14 +110,14 @@
                 });
 
                 statusMessage.textContent = "Record successfully synchronized.";
-                statusMessage.className = "mt-4 text-center text-sm font-medium text-indigo-400";
+                statusMessage.className = "mt-4 text-center text-sm font-medium text-blue-600";
                 statusMessage.classList.remove('hidden');
                 
                 document.getElementById('expenseForm').reset();
                 setPerson('Ako');
             } catch (error) {
                 statusMessage.textContent = "Transmission failed. Please verify network status.";
-                statusMessage.className = "mt-4 text-center text-sm font-medium text-rose-400";
+                statusMessage.className = "mt-4 text-center text-sm font-medium text-rose-600";
                 statusMessage.classList.remove('hidden');
             } finally {
                 submitBtn.disabled = false;
