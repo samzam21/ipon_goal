@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense & Savings Tracking System</title>
+    <title>Financial Tracking Portal</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -11,41 +11,52 @@
 
     <div class="w-full max-w-lg bg-white rounded-2xl shadow-lg p-8 border border-slate-200">
         <div class="mb-8 border-b border-slate-100 pb-5">
-            <h1 class="text-xl font-bold tracking-tight text-slate-900">Expense Entry Portal</h1>
-            <p class="text-sm text-slate-500 mt-1">Record and synchronize daily itemized expenditures to the tracking ledger.</p>
+            <h1 class="text-xl font-bold tracking-tight text-slate-900">Financial Entry Portal</h1>
+            <p class="text-sm text-slate-500 mt-1">Record and synchronize daily cash flow and expenditures.</p>
         </div>
 
         <form id="expenseForm" class="space-y-5">
-            <!-- Who paid -->
+            <!-- Accountable Party -->
             <div>
                 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Accountable Party</label>
                 <div class="grid grid-cols-2 gap-3">
-                    <button type="button" onclick="setPerson('Ako')" id="btnAko" class="py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none">Me</button>
+                    <button type="button" onclick="setPerson('Sam')" id="btnSam" class="py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none">Sam</button>
                     <button type="button" onclick="setPerson('Jet')" id="btnJet" class="py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none">Jet</button>
                 </div>
-                <input type="hidden" id="person" value="Ako">
+                <input type="hidden" id="person" value="Sam">
             </div>
 
-            <!-- Transaction Date Picker (Supports any Month, Day, Year) -->
+            <!-- Transaction Type (Expense vs Income) -->
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Transaction Type</label>
+                <div class="grid grid-cols-2 gap-3">
+                    <button type="button" onclick="setType('expense')" id="btnExpense" class="py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none">Expense</button>
+                    <button type="button" onclick="setType('income')" id="btnIncome" class="py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none">Income</button>
+                </div>
+                <input type="hidden" id="entryType" value="expense">
+            </div>
+
+            <!-- Transaction Date Picker -->
             <div>
                 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Transaction Date</label>
                 <input type="date" id="date" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition">
             </div>
 
-            <!-- Item Name -->
+            <!-- Item Description -->
             <div>
-                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Item Description</label>
-                <input type="text" id="item" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition" placeholder="e.g., Grocery Store Supplies">
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Description / Source</label>
+                <input type="text" id="item" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition" placeholder="e.g., Grocery Supplies / Salary">
             </div>
 
             <!-- Category -->
             <div>
-                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Expense Category</label>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Category</label>
                 <select id="category" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-slate-900 text-sm focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600 transition">
                     <option value="Food & Groceries">Food & Groceries</option>
                     <option value="Bills & Utilities">Bills & Utilities</option>
                     <option value="Transport">Transport</option>
-                    <option value="Leisure">Leisure & Entertainment</option>
+                    <option value="Leisure & Entertainment">Leisure & Entertainment</option>
+                    <option value="Salary / Earnings">Salary / Earnings</option>
                     <option value="Others">Others</option>
                 </select>
             </div>
@@ -72,15 +83,29 @@
 
         function setPerson(name) {
             document.getElementById('person').value = name;
-            const btnAko = document.getElementById('btnAko');
+            const btnSam = document.getElementById('btnSam');
             const btnJet = document.getElementById('btnJet');
             
-            if(name === 'Ako') {
-                btnAko.className = "py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none";
+            if(name === 'Sam') {
+                btnSam.className = "py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none";
                 btnJet.className = "py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none";
             } else {
                 btnJet.className = "py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none";
-                btnAko.className = "py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none";
+                btnSam.className = "py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none";
+            }
+        }
+
+        function setType(type) {
+            document.getElementById('entryType').value = type;
+            const btnExpense = document.getElementById('btnExpense');
+            const btnIncome = document.getElementById('btnIncome');
+            
+            if(type === 'expense') {
+                btnExpense.className = "py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none";
+                btnIncome.className = "py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none";
+            } else {
+                btnIncome.className = "py-2.5 px-4 rounded-xl border border-blue-600 bg-blue-50 text-blue-700 text-sm font-medium transition focus:outline-none";
+                btnExpense.className = "py-2.5 px-4 rounded-xl border border-slate-300 bg-white text-slate-700 text-sm font-medium transition focus:outline-none";
             }
         }
 
@@ -91,9 +116,9 @@
             const submitBtn = document.getElementById('submitBtn');
             const statusMessage = document.getElementById('statusMessage');
 
-            // Gamitin ang URLSearchParams para maipasa nang diretso sa Apps Script
             const formData = new URLSearchParams({
                 person: document.getElementById('person').value,
+                type: document.getElementById('entryType').value,
                 date: document.getElementById('date').value,
                 item: document.getElementById('item').value,
                 category: document.getElementById('category').value,
@@ -117,7 +142,8 @@
                 
                 document.getElementById('expenseForm').reset();
                 document.getElementById('date').valueAsDate = new Date();
-                setPerson('Ako');
+                setPerson('Sam');
+                setType('expense');
             } catch (error) {
                 statusMessage.textContent = "Transmission failed. Please verify network status.";
                 statusMessage.className = "mt-4 text-center text-sm font-medium text-rose-600";
